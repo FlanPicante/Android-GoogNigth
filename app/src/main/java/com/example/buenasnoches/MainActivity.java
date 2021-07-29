@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btt1;
     String randomst;
-    int maxnum;
+    int maxnum,counttex;
 
 
     @Override
@@ -30,8 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id=v.getId();
         if(id == R.id.btt1){
             GetRandomId();
+            CountText();
             Intent iniciob= new Intent(this,SegundoActiviy.class);
             iniciob.putExtra("id",randomst);
+            iniciob.putExtra("largo",counttex);
             startActivity(iniciob);
 
         }
@@ -39,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void GetRandomId(){
-
         AdminSQLite admin =new AdminSQLite(MainActivity.this);
         SQLiteDatabase db = admin.getWritableDatabase();
         if(db!=null){
@@ -48,17 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ("select MAX(Id) FROM cancion ", null);
 
             if (contador.moveToFirst()){
-                maxnum = Integer.parseInt(String.valueOf(contador.getString(0)));
+                maxnum = Integer.parseInt(contador.getString(0));
             } else {
                 Toast.makeText(this,"Error al encontrar el maximo", Toast.LENGTH_SHORT).show();
             }
             //GENERAR NUMERO ALEATORIO CON EL MAXIMO
 
             int numrandom_int = (int)(Math.random() * maxnum + 1);
-
             String numrandom = String.valueOf(numrandom_int);
 
-            //validacion
+            //validacion NO ESTA LISTA AUN
 
             Cursor fila = db.rawQuery
                     ("select Id FROM cancion WHERE Id=" + numrandom, null);
@@ -72,6 +72,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             db.close();
 
         }
+    }
+
+    //funcion largotexto
+    public void CountText(){
+        int IdCancion= Integer.parseInt(randomst);
+        AdminSQLite admin =new AdminSQLite(MainActivity.this);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        if(db!=null){
+            Cursor count= db.rawQuery("SELECT COUNT(Id) FROM textos WHERE IdCancion = "+IdCancion,null);
+            if(count.moveToFirst()){
+                counttex= Integer.parseInt(count.getString(0));
+            }else {
+                Toast.makeText(this, "Error al econtrar el id", Toast.LENGTH_SHORT).show();
+            }
+
+            db.close();
+        }
+
     }
 
     //CONECTAR INTGRAFIC A COD

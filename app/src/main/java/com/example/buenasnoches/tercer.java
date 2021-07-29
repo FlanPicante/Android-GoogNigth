@@ -15,7 +15,7 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     Button btt3;
     TextView txtv2,txtprueba;
     String IdMain;
-    int IdOrder;
+    int IdOrder,LargoText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +26,17 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
         if(extras!=null){
             IdMain=extras.getString("id");
             IdOrder=extras.getInt("orden");
+            LargoText=extras.getInt("largo");
 
         }
-        PrintLyric();
+        if(IdOrder<LargoText){
+            PrintLyric();
+        }else {
+            EndNigth();
+        }
 
-        txtprueba.setText(String.valueOf(IdOrder));
+
+        txtprueba.setText(String.valueOf(LargoText));
     }
 
 
@@ -39,6 +45,7 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
         Intent inicio2=new Intent(this,SegundoActiviy.class);
         inicio2.putExtra("id",IdMain);
         inicio2.putExtra("orden",IdOrder);
+        inicio2.putExtra("largo",LargoText);
         startActivity(inicio2);
     }
 
@@ -66,4 +73,7 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
 
     }
 
+    public void EndNigth(){
+        txtv2.setText("Feliz noche :D");
+    }
 }

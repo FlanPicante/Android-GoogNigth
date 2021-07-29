@@ -16,7 +16,7 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     Button btt2;
     TextView frase_vw;
     String IdMain;
-    int IdOrder=0;
+    int IdOrder=0,LargoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,15 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
         if(extras!=null){
             IdMain=extras.getString("id");
             IdOrder=extras.getInt("orden");
+            LargoText=extras.getInt("largo");
 
         }
-        PrintLyric();
+        if(IdOrder<LargoText){
+            PrintLyric();
+        }else {
+            EndNigth();
+        }
+
     }
 
     public void PrintLyric(){
@@ -69,7 +75,12 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
             Intent inicio3= new Intent(this,tercer.class);
             inicio3.putExtra("id",IdMain);
             inicio3.putExtra("orden",IdOrder);
+            inicio3.putExtra("largo",LargoText);
             startActivity(inicio3);
         }
+    }
+
+    public void EndNigth(){
+        frase_vw.setText("Feliz noche :D");
     }
 }
