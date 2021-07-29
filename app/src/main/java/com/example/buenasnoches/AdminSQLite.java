@@ -8,15 +8,18 @@ import androidx.annotation.Nullable;
 
 public class AdminSQLite extends SQLiteOpenHelper{
 
+    private static final int DATABASE_VERSION =1;
+    private static final String DATABASE_NOMBRE="bye.db";
+    public static final String TABLE_C ="cancion";
 
-    public AdminSQLite(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public AdminSQLite(@Nullable Context context) {
+        super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
 
     }
 
     @Override
     public void onCreate(SQLiteDatabase basededatos) {
-        basededatos.execSQL("CREATE TABLE cancion (Id int primary key ,Nombre varchar) ");
+        basededatos.execSQL("CREATE TABLE " + TABLE_C + " (Id int primary key ,Nombre varchar, Estado int)");
     }
 
     @Override
