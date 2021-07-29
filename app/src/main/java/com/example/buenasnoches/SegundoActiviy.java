@@ -16,7 +16,7 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     Button btt2;
     TextView frase_vw;
     String IdMain;
-    int IdOrder=1,MaxRow;
+    int IdOrder=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,14 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
         Bundle extras= getIntent().getExtras();
         if(extras!=null){
             IdMain=extras.getString("id");
+            IdOrder=extras.getInt("orden");
 
         }
         PrintLyric();
     }
 
     public void PrintLyric(){
+            IdOrder++;
             AdminSQLite admin =new AdminSQLite(SegundoActiviy.this);
             SQLiteDatabase db = admin.getWritableDatabase();
 
@@ -51,16 +53,8 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void SelectMax(){
-        AdminSQLite admin =new AdminSQLite(SegundoActiviy.this);
-        SQLiteDatabase db = admin.getWritableDatabase();
-        if(db!=null){
-            Cursor max=db.rawQuery("SELECT MAX(Id) FROM textos where IdCancion="+IdMain,null);
-            MaxRow=max.getInt(0);
-            db.close();
-        }
 
-    }
+
     public void intUP(){
         frase_vw=(TextView)findViewById(R.id.txtv_1);
         btt2=(Button)findViewById(R.id.btt2);

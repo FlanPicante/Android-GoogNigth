@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 maxnum = Integer.parseInt(String.valueOf(contador.getString(0)));
             } else {
                 Toast.makeText(this,"Error al encontrar el maximo", Toast.LENGTH_SHORT).show();
-                db.close();
             }
             //GENERAR NUMERO ALEATORIO CON EL MAXIMO
 
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             } else {
                 Toast.makeText(this, "Error al econtrar el id", Toast.LENGTH_SHORT).show();
-                db.close();
             }
 
             db.close();
