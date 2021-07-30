@@ -74,6 +74,11 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void EndNigth(){
+        btt3.setVisibility(View.INVISIBLE);
         txtv2.setText("Feliz noche :D");
+        AdminSQLite admin =new AdminSQLite(tercer.this);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        db.execSQL("UPDATE cancion SET Estado=1 WHERE Id= " +IdMain );
+        db.close();
     }
 }

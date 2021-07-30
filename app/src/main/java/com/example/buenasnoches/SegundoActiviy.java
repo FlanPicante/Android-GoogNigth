@@ -81,6 +81,13 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     }
 
     public void EndNigth(){
+        btt2.setVisibility(View.INVISIBLE);
         frase_vw.setText("Feliz noche :D");
+        String tmp="1";
+        AdminSQLite admin =new AdminSQLite(SegundoActiviy.this);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        db.execSQL("UPDATE cancion SET Estado=1 WHERE Id= " +IdMain );
+        db.close();
+
     }
 }

@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.Random;
+import java.util.stream.IntStream;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btt1;
     String randomst;
-    int maxnum,counttex;
+    int maxnum,counttex,estado;
 
 
     @Override
@@ -46,28 +49,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(db!=null){
             //BUSACAR EL MAXIMO
             Cursor contador = db.rawQuery
-                    ("select MAX(Id) FROM cancion ", null);
+                    ("select COUNT(Id) FROM cancion WHERE Estado=0", null);
+            contador.moveToFirst();
+            maxnum = contador.getInt(0);
+            //GENERAR UN VECTOR DEL TAM DEL MAXIMO
+            int[] numerosAleatorios= new int[maxnum];
+            int i=0;
+            //CONSULTAR LOS IDS DISPONIBLES
+            Cursor idv = db.rawQuery("SELECT Id FROM cancion WHERE Estado =0",null);
+                if(idv !=null){
+                    idv.moveToFirst();
+                    //PASAR IDS AL VECTOR
 
-            if (contador.moveToFirst()){
-                maxnum = Integer.parseInt(contador.getString(0));
-            } else {
-                Toast.makeText(this,"Error al encontrar el maximo", Toast.LENGTH_SHORT).show();
+                    do {
+                        numerosAleatorios[i]=idv.getInt(0);
+                        i++;
+                    }while(idv.moveToNext());
+                }
+            Random r =new Random();
+            for (int y=numerosAleatorios.length;y>0;y--){
+                int posicion= r.nextInt(y);
+                int tmp=numerosAleatorios[y-1];
+                numerosAleatorios[y-1]=numerosAleatorios[posicion];
+                numerosAleatorios[posicion]=tmp;
+
             }
-            //GENERAR NUMERO ALEATORIO CON EL MAXIMO
-
-            int numrandom_int = (int)(Math.random() * maxnum + 1);
-            String numrandom = String.valueOf(numrandom_int);
-
-            //validacion NO ESTA LISTA AUN
-
-            Cursor fila = db.rawQuery
-                    ("select Id FROM cancion WHERE Id=" + numrandom, null);
-            if (fila.moveToFirst()) {
-                randomst=fila.getString(0);
-
-            } else {
-                Toast.makeText(this, "Error al econtrar el id", Toast.LENGTH_SHORT).show();
-            }
+            i=0;
+            do{
+                Cursor fila = db.rawQuery
+                        ("select Id,Estado FROM cancion WHERE Id=" + numerosAleatorios[i], null);
+                fila.moveToFirst();
+                    randomst=fila.getString(0);
+                    estado=fila.getInt(1);
+                i++;
+            }while(estado==1);
 
             db.close();
 
