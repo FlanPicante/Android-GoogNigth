@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btt1;
@@ -19,10 +19,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int maxnum,counttex,estado;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DBFile dbFile= new DBFile(MainActivity.this);
+        try {
+            dbFile.CopyDBFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         intUpc();
         btt1.setOnClickListener(this);
 
@@ -44,8 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void GetRandomId(){
-        AdminSQLite admin =new AdminSQLite(MainActivity.this);
-        SQLiteDatabase db = admin.getWritableDatabase();
+        String DB_PATH= getDatabasePath("bye.db").toString();
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH, null, SQLiteDatabase.OPEN_READONLY);
+
         if(db!=null){
             //BUSACAR EL MAXIMO
             Cursor contador = db.rawQuery
@@ -91,9 +99,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //funcion largotexto
     public void CountText(){
+        String DB_PATH= getDatabasePath("bye.db").toString();
         int IdCancion= Integer.parseInt(randomst);
-        AdminSQLite admin =new AdminSQLite(MainActivity.this);
-        SQLiteDatabase db = admin.getWritableDatabase();
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH,null,SQLiteDatabase.OPEN_READONLY);
+
         if(db!=null){
             Cursor count= db.rawQuery("SELECT COUNT(Id) FROM textos WHERE IdCancion = "+IdCancion,null);
             if(count.moveToFirst()){

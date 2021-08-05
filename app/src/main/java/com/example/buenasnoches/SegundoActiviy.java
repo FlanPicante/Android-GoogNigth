@@ -18,6 +18,7 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     String IdMain;
     int IdOrder=0,LargoText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +42,9 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     }
 
     public void PrintLyric(){
+        String DB_PATH= getDatabasePath("bye.db").toString();
             IdOrder++;
-            AdminSQLite admin =new AdminSQLite(SegundoActiviy.this);
-            SQLiteDatabase db = admin.getWritableDatabase();
+            SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH,null,SQLiteDatabase.OPEN_READONLY);
 
             Cursor fila = db.rawQuery
                     ("select Texto FROM textos WHERE IdCancion= "+IdMain+ " AND Orden= "+IdOrder, null);
@@ -81,11 +82,12 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     }
 
     public void EndNigth(){
+        String DB_PATH= getDatabasePath("bye.db").toString();
         btt2.setVisibility(View.INVISIBLE);
         frase_vw.setText("Feliz noche :D");
         String tmp="1";
-        AdminSQLite admin =new AdminSQLite(SegundoActiviy.this);
-        SQLiteDatabase db = admin.getWritableDatabase();
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH,null,SQLiteDatabase.OPEN_READWRITE);
+
         db.execSQL("UPDATE cancion SET Estado=1 WHERE Id= " +IdMain );
         db.close();
 

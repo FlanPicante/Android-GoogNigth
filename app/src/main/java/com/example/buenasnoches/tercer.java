@@ -16,6 +16,7 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     TextView txtv2,txtprueba;
     String IdMain;
     int IdOrder,LargoText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +57,10 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void PrintLyric(){
+        String DB_PATH= getDatabasePath("bye.db").toString();
         IdOrder++;
-        AdminSQLite admin =new AdminSQLite(this);
-        SQLiteDatabase db = admin.getWritableDatabase();
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(DB_PATH,null,SQLiteDatabase.OPEN_READONLY);
+
         Cursor fila = db.rawQuery
                 ("select Texto FROM textos WHERE IdCancion= "+IdMain+ " AND Orden= "+IdOrder, null);
 
@@ -74,10 +76,10 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void EndNigth(){
+        String DB_PATH= getDatabasePath("bye.db").toString();
         btt3.setVisibility(View.INVISIBLE);
         txtv2.setText("Feliz noche :D");
-        AdminSQLite admin =new AdminSQLite(tercer.this);
-        SQLiteDatabase db = admin.getWritableDatabase();
+        SQLiteDatabase db =SQLiteDatabase.openDatabase(DB_PATH,null,SQLiteDatabase.OPEN_READWRITE);
         db.execSQL("UPDATE cancion SET Estado=1 WHERE Id= " +IdMain );
         db.close();
     }
