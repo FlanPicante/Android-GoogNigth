@@ -72,7 +72,6 @@ public class SegundoActiviy extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         int id=v.getId();
         if(id==R.id.btt2){
-            Toast.makeText(SegundoActiviy.this,"Si funciona boton",Toast.LENGTH_SHORT).show();
             Intent inicio3= new Intent(this,tercer.class);
             inicio3.putExtra("id",IdMain);
             inicio3.putExtra("orden",IdOrder);

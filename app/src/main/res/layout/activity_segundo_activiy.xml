@@ -4,31 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SegundoActiviy">
+    tools:context=".SegundoActiviy"
+    android:background="@drawable/b1"
+    >
 
     <TextView
         android:id="@+id/txtv_1"
-        android:layout_width="296dp"
-        android:layout_height="179dp"
+        android:layout_width="324dp"
+        android:layout_height="180dp"
+        android:fontFamily="casual"
+        android:textAlignment="center"
         android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <Button
         android:id="@+id/btt2"
         android:layout_width="288dp"
         android:layout_height="71dp"
         android:layout_marginBottom="216dp"
+        android:background="@drawable/button_dise"
+        android:fontFamily="casual"
         android:onClick="onClick"
         android:text="@string/btt2"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtv_1"
+        app:layout_constraintTop_toBottomOf="@id/txtv_1"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class tercer extends AppCompatActivity implements View.OnClickListener{
     Button btt3;
-    TextView txtv2,txtprueba;
+    TextView txtv2;
     String IdMain;
     int IdOrder,LargoText;
 
@@ -36,8 +36,6 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
             EndNigth();
         }
 
-
-        txtprueba.setText(String.valueOf(LargoText));
     }
 
 
@@ -53,7 +51,6 @@ public class tercer extends AppCompatActivity implements View.OnClickListener{
     public void initUP(){
         txtv2=(TextView)findViewById(R.id.txtv_2);
         btt3=(Button)findViewById(R.id.btt3);
-        txtprueba=(TextView)findViewById(R.id.txtprueba);
     }
 
     public void PrintLyric(){
